@@ -1,0 +1,17 @@
+<div class="nav-top">
+  <app-feed [titleFromAnotherComponent]="title"></app-feed>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 post-box">
+      <div *ngFor="let post of arrayOfPosts" class="posts">
+        <h3>{{ post.title }}</h3>
+        <hr />
+        <p>{{ post.post }}</p>
+        <hr>
+        <img src="{{post.image}}" alt="">
+      </div>
+    </div>
+  </div>
+</div>

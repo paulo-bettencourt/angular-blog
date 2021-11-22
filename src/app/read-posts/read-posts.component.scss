@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&family=Zen+Kurenaido&display=swap');
+
+.container-fluid {
+  width: 50%;
+  margin: auto;
+}
+
+@mixin post-box {
+  border: 1px solid black;
+  margin: 3%;
+  padding: 3%;
+  width: 100%;
+}
+
+.posts {
+  @include post-box;
+  border-radius: 5px;
+}
+
+.nav-top {
+  position: fixed;
+}
+
+p {
+  font-family: 'Inconsolata', monospace;
+}
+
+.container-fluid {
+  margin-left: 600px;
+}
+
+h3 {
+  font-family: 'Zen Kurenaido', sans-serif;
+}
