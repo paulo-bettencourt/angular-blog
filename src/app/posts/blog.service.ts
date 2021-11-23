@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { from, Observable, of, Subject, Subscription } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Post } from './add-post/post';
 
@@ -11,20 +11,21 @@ import { Post } from './add-post/post';
 })
 export class BlogService {
 
-  urlPosts = 'http://localhost:3000/posts/'
+  urlPosts = 'http://localhost:3000/posts/';
+  posts$ = new Subject<Post[]>();
+  req = 0;
 
   constructor(private http: HttpClient) { }
 
-  publishPost(formGroup: FormGroup): Observable<Post> {
+  // publishPost(formGroup: FormGroup): Observable<Post> {
+  publishPost(data: Post): Observable<Post> {
 
-    console.warn(formGroup.value.title, formGroup.value.post, formGroup.value.image)
+    // console.warn(formGroup.value.title, formGroup.value.post, formGroup.value.image)
+    // const data = formGroup.value;
 
-    return this.http.post<Post>(this.urlPosts, {
-      "title": formGroup.value.title,
-      "post": formGroup.value.post,
-      "image": formGroup.value.image
-    })
+    return this.http.post<Post>(this.urlPosts, data)
       .pipe(
+        tap(() => this.readPostsGetApiRequest2()),
         catchError(this.handleError)
       );
   }
@@ -48,6 +49,16 @@ export class BlogService {
     return this.http.get<Post[]>(this.urlPosts)
       .pipe(
         catchError(this.handleError)
+      );
+  }
+
+  readPostsGetApiRequest2(): void {
+    this.http.get<Post[]>(this.urlPosts)
+      .subscribe(
+        res => {
+          this.posts$.next(res);
+        },
+        err => this.handleError(err)
       );
   }
 
