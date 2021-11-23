@@ -1,5 +1,5 @@
 <div class="nav-top">
-  <app-feed [titleFromAnotherComponent]="title"></app-feed>
+  <add-post [titleFromAnotherComponent]="title" (consoleLog)="counterOutput($event)"></add-post>
 </div>
 
 <div class="container-fluid">
@@ -10,7 +10,7 @@
         <hr />
         <p>{{ post.post }}</p>
         <hr>
-        <img src="{{post.image}}" alt="">
+        <img src="{{ post.image }}" alt="">
       </div>
     </div>
   </div>

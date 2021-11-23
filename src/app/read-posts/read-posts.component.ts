@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Post } from '../add-post/post';
 import { BlogService } from '../blog.service';
 
 @Component({
@@ -13,7 +13,6 @@ export class ReadPostsComponent implements OnInit {
 
   title: string = "Angular Blog"
 
-
   constructor(private api: BlogService) { }
 
   ngOnInit(): void {
@@ -25,8 +24,10 @@ export class ReadPostsComponent implements OnInit {
       .subscribe(response => this.arrayOfPosts = response.reverse())
 
     console.log(this.arrayOfPosts)
-
   }
 
+  counterOutput(event: any) {
+    console.log(event.responseApiFromServer, "<< Output Event");
+  }
 
 }

@@ -4,21 +4,23 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { BlogService } from '../blog.service';
 
 @Component({
-  selector: 'app-feed',
+  selector: 'add-post',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
 export class FeedComponent implements OnInit {
 
-  @Input() titleFromAnotherComponent: string
+  @Input() titleFromAnotherComponent: string;
 
-  @Output() counter = new EventEmitter();
+  @Output() consoleLog = new EventEmitter();
+
+  responseApi: any;
 
   profileForm = new FormGroup({
     title: new FormControl(''),
     post: new FormControl(''),
     image: new FormControl('')
-  });;
+  });
 
   constructor(private api: BlogService) { }
 
@@ -26,7 +28,7 @@ export class FeedComponent implements OnInit {
   }
 
   onSubmit() {
-    this.api.publishPost(this.profileForm).subscribe((response) => console.log(response))
+    this.api.publishPost(this.profileForm).subscribe((response) => this.consoleLog.emit({ "responseApiFromServer": response }));
   }
 
   refresh(): void {
